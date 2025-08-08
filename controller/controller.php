@@ -11,5 +11,9 @@ function exibirBusca(){
     readProdutos($_POST["categoria"]);
 }
 
+function criarProd(){
+    include ("./views/create/create.php");
+    criarProduto($_POST["nomeProduto"], $_POST["categoria"], $_POST["precoProduto"]);
+}
 
 ?>

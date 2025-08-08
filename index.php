@@ -13,7 +13,10 @@ switch($acao){
         exibirBusca();
         break;
     }
-
+    case "criar": {
+        criarProd();
+        break;
+    }
 }
 
 

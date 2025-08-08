@@ -4,13 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="home.css">
+    <title>Criar</title>
+    <link rel="stylesheet" href="create.css">
 </head>
 
 <body>
-    <form action="index.php" method="post">
-        <h1 align="center"> Busca produtos </h1>
+    <h1> Criar Produtos </h1>
+    <form action="../../index.php" method="post">
+        <input type="text" name="nomeProduto" id="" placeholder="Digite o nome do produto"> <br><br>
+        <input type="number" name="precoProduto" id="" placeholder="Digite o valor do produto"><br><br>
         <select name="categoria" id="">
             <option value="nulo"> Selecione uma categoria </option>
             <?php
@@ -23,10 +25,10 @@
             }
             ?>
         </select>
-        <input type="hidden" name="acao" value="buscar">
-        <input type="submit" value="Buscar">
+        <input type="hidden" name="acao" value="criar">
+        <input type="submit" value="Criar Produto">
     </form>
-    <a href="./views/create/create.php"> <button> Criar Produto </button> </a>
+
 </body>
 
 </html>

@@ -1,34 +1,50 @@
 <?php
 
-require("model/conexao.php");
+function conectarBanco() {
+    $host = "127.0.0.1";
+    $user = "root";
+    $password = "root";
+    $database = "produto_categoria";
 
+    // Criação da conexão
+    $conexao = new mysqli($host, $user, $password, $database);
+
+    // Verifica se houve erro na conexão
+    if ($conexao->connect_error) {
+        die("Erro na conexão: " . $conexao->connect_error);
+    }
+
+    // Define o charset para evitar problemas com caracteres especiais
+    $conexao->set_charset("utf8mb4");
+
+    return $conexao;
+}
 
 function readCategorias(){
+
     $sql = "SELECT * FROM categorias";       
 
     $conexao = conectarBanco();   
     
-    // Executa a consulta SQL
     $result = $conexao->query($sql);
 
-    //cria um array vazio para armazenar os dados
+
     $categorias = [];
 
-    // enquanto houver linhas na consulta, adiciona cada linha ao array
     while ($row = $result->fetch_assoc()) {
         $categorias[] = $row;
     }
     $conexao->close();
-    // Retorna os dados obtidos
+
     return $categorias;
 }
 
 function readProdutos($id){
     $conexao = conectarBanco();
         $sql = "SELECT 
-            produtos.nome_produto AS nome_produto, 
+            produtos.nome_produto, 
             produtos.preco_produto, 
-            categorias.nome_categoria AS nome_categoria 
+            categorias.nome_categoria
         FROM 
             produtos 
         INNER JOIN 
@@ -58,9 +74,18 @@ function readProdutos($id){
     echo "<br>";
 
     foreach($produtos as $prod){
-        echo $prod["nome_produto"];
+        echo "{$prod["nome_produto"]}: {$prod["preco_produto"]}";
         echo "<br><br>";
     }
 }
 
+function criarProdutos($nome, $id, $preco){
+    $conexao = conectarBanco();
+    $sql = "INSERT INTO produtos (nome_produto, id_categoria_fk, preco_produto) VALUES (?, ?, ?)";
+    $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("sid", $nome, $id, $preco);
+    $stmt->execute();
+    $stmt->close();
+    $conexao->close();
+}
 ?>
